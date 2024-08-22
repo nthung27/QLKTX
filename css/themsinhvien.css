@@ -1,0 +1,68 @@
+/* css/themsinhvien.css */
+.themsinhvien {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 1200px;
+    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+.label input {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: black;
+    text-align: left;
+}
+
+input[type="text"], select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: calc(100% - 22px); /* Adjust width to include padding */
+}
+
+input[type="submit"] {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+br {
+    display: none;
+}
+
+input[type="date"] {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    font-size: 16px;
+}
