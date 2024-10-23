@@ -5,7 +5,7 @@
     include "sliderbar.php";
     include_once "../config/db.php";
 
-    $phong_sql = "SELECT tenphong FROM phong";
+    $phong_sql = "SELECT Maphong FROM phong";
     $phong_result = $conn->query($phong_sql);
 
     if (!$phong_result) {
@@ -34,17 +34,18 @@
     // Kiểm tra xem form đã được gửi đi chưa
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Lấy dữ liệu từ form
+        $mahopdong = $_POST['Mahopdong'];
         $masinhvien = $_POST['Masinhvien'];
         $hoten = $_POST['Hoten'];
         $lop = $_POST['Lop'];
         $phong = $_POST['Phong'];
 
         // Kiểm tra không để trống
-        if(empty($masinhvien) || empty($hoten) || empty($lop) || empty($phong)) {
+        if(empty($mahopdong) || empty($masinhvien) || empty($hoten) || empty($lop) || empty($phong)) {
             echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
         } else {
             // Cập nhật thông tin Hợp đồng vào cơ sở dữ liệu
-            $sql_update = "UPDATE hopdong SET Masinhvien='$masinhvien', Hoten='$hoten', Lop='$lop', Phong='$phong'  WHERE id=$id";
+            $sql_update = "UPDATE hopdong SET Mahopdong='$mahopdong', Masinhvien='$masinhvien', Hoten='$hoten', Lop='$lop', Maphong='$phong'  WHERE id=$id";
             if(mysqli_query($conn, $sql_update)) {
                 echo "<script>alert('Sửa hợp đồng thành công'); window.location.href='Hopdong.php';</script>";
             } else {
@@ -57,6 +58,8 @@
     <div class="themsinhvien">
         <div>
             <form action="" method="POST">
+                <label for="Mahopdong">Mã hợp đồng</label>
+                <input type="text" name="Mahopdong" id="mahopdong" value="<?php echo $student['Mahopdong']; ?>" readonly>
                 <label for="Masinhvien">Mã sinh viên</label>
                 <input type="text" name="Masinhvien" id="masinhvien" value="<?php echo $student['Masinhvien']; ?>" readonly>
 
@@ -66,14 +69,14 @@
                 <label for="Lop">Lớp</label>
                 <input type="text" name="Lop" id="lop" value="<?php echo $student['Lop']; ?>" readonly>
 
-                <label for="Phong">Phòng</label>
+                <label for="Phong">Mã phòng</label>
                 <select name="Phong" id="phong">
                     <?php
                         if ($phong_result->num_rows > 0) {
                             while($row = $phong_result->fetch_assoc()) {
                                 // Kiểm tra nếu phòng này đã được chọn
-                                $selected = ($row['tenphong'] == $student['Phong']) ? 'selected' : '';
-                                echo "<option value='" . $row['tenphong'] . "' $selected>" . $row['tenphong'] . "</option>";
+                                $selected = ($row['Maphong'] == $student['Phong']) ? 'selected' : '';
+                                echo "<option value='" . $row['Maphong'] . "' $selected>" . $row['Maphong'] . "</option>";
                             }
                         } else {
                             echo "<option value=''>Không có phòng</option>";

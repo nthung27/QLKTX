@@ -27,17 +27,19 @@
     // Kiểm tra xem form đã được gửi đi chưa
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Lấy dữ liệu từ form
-        $masinhvien = $_POST['Masinhvien'];
+        $mathanhtoan = $_POST['Mathanhtoan'];
+        $mahopdong = $_POST['Mahopdong'];
+        $hoten = $_POST['Hoten'];
         $phong = $_POST['Phong'];
         $tongtien = $_POST['Tongtien'];
         $thanhtoan = $_POST['Thanhtoan'];
 
         // Kiểm tra không để trống
-        if(empty($masinhvien) || empty($phong) || empty($tongtien) || empty($thanhtoan)) {
+        if(empty($mathanhtoan) || empty($mahopdong) || empty($hoten) || empty($phong) || empty($tongtien) || empty($thanhtoan)) {
             echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
         } else {
             // Cập nhật thông tin Thanh toán vào cơ sở dữ liệu
-            $sql_update = "UPDATE thanhtoan SET Masinhvien='$masinhvien', Phong='$phong', Thanhtoan='$thanhtoan', Tongtien='$tongtien' WHERE id=$id";
+            $sql_update = "UPDATE thanhtoan SET Mathanhtoan='$mathanhtoan', Mahopdong='$mahopdong', Hoten='$hoten', Maphong='$phong', Thanhtoan='$thanhtoan', Tongtien='$tongtien' WHERE id=$id";
             if(mysqli_query($conn, $sql_update)) {
                 echo "<script>alert('Sửa dữ liệu thành công'); window.location.href='Thanhtoan.php';</script>";
             } else {
@@ -50,11 +52,17 @@
     <div class="themsinhvien">
         <div>
             <form action="" method="POST">
-                <label for="Masinhvien">Mã sinh viên</label>
-                <input type="text" name="Masinhvien" id="masinhvien" value="<?php echo $student['Masinhvien']; ?>" readonly>
+                <label for="Mathanhtoan">Mã thanh toán</label>
+                <input type="text" name="Mathanhtoan" id="mathanhtoan" value="<?php echo $student['Mathanhtoan']; ?>" readonly>
+
+                <label for="Mahopdong">Mã hợp đồng</label>
+                <input type="text" name="Mahopdong" id="mahopdong" value="<?php echo $student['Mahopdong']; ?>" readonly>
+
+                <label for="Hoten">Họ tên</label>
+                <input type="text" name="Hoten" id="hoten" value="<?php echo $student['Hoten']; ?>" readonly>
 
                 <label for="Phong">Phòng</label>
-                <input type="text" name="Phong" id="phong" value="<?php echo $student['Phong']; ?>" readonly>
+                <input type="text" name="Phong" id="phong" value="<?php echo $student['Maphong']; ?>" readonly>
 
                 <label for="Tongtien">Tổng tiền</label>
                 <input type="text" name="Tongtien" id="tongtien" value="<?php echo $student['Tongtien']; ?>" readonly>

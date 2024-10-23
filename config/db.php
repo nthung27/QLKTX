@@ -2,7 +2,7 @@
 $server = "localhost";
 $user = "root";
 $password = "";
-$db = "btl_java";
+$db = "baitaplon";
 
 $conn = mysqli_connect($server,$user,$password,$db);
 

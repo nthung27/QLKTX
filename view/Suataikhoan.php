@@ -62,7 +62,7 @@
                 <label for="Email">Email</label>
                 <input type="text" name="Email" id="email" value="<?php echo $student['email']; ?>">
 
-                <input type="submit" value="Sửa phòng">
+                <input type="submit" value="Sửa tài khoản">
             </form>
         </div>
     </div>

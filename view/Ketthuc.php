@@ -6,7 +6,7 @@
     include_once "../config/db.php";
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     if ($searchTerm) {
-        $sql = "SELECT * FROM ketthuc WHERE Hoten LIKE '%$searchTerm%' OR Masinhvien LIKE '%$searchTerm%'";
+        $sql = "SELECT * FROM ketthuc WHERE Hoten LIKE '%$searchTerm%' OR Mahopdong LIKE '%$searchTerm%'";
     } else {
         $sql = "SELECT * FROM ketthuc";
     }
@@ -16,17 +16,17 @@
         <h1>Quản Lý Kết Thúc Hợp Đồng</h1>
         <form method="GET" action="">
             <input class="tk" type="submit" value="Tìm kiếm">
-            <input class="Timkiem" type="text" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>" placeholder="Nhập họ tên hoặc mã sinh viên">
+            <input class="Timkiem" type="text" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>" placeholder="Nhập họ tên hoặc mã hợp đồng">
         </form>
         <a href="Themketthuc.php">Thêm dữ liệu</a>
         <table border="1">
             <tr>
                 <th>ID</th>
-                <th>Mã sinh viên</th>
+                <th>Mã hợp đồng</th>
                 <th>Họ tên</th>
-                <th>Lớp</th>
-                <th>Phòng</th>
-                <th>Ngày kết thúc</th>
+                <th>Mã phòng</th>
+                <th>Thanh toán</th>
+                <th>Ngày tạo</th>
                 <th>Thao tác</th>
             </tr>
             <?php
@@ -38,11 +38,11 @@
                     ?>
                     <tr>
                         <td><?php echo $student['id']; ?></td>
-                        <td><?php echo $student['Masinhvien']; ?></td>
+                        <td><?php echo $student['Mahopdong']; ?></td>
                         <td><?php echo $student['Hoten']; ?></td>
-                        <td><?php echo $student['Lop']; ?></td>
-                        <td><?php echo $student['Phong']; ?></td>
-                        <td><?php echo $student['Ngayketthuc']; ?></td>
+                        <td><?php echo $student['Maphong']; ?></td>
+                        <td><?php echo $student['Thanhtoan']; ?></td>
+                        <td><?php echo $student['Ngaytao']; ?></td>
                         <td>
                             <a href="Suaketthuc.php?id=<?php echo $student['id']; ?>">Sửa</a>
                             <a href="Xoaketthuc.php?id=<?php echo $student['id']; ?>">Xóa</a>

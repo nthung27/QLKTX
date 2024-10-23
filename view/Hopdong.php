@@ -1,5 +1,5 @@
 <title>Danh sách hồ sơ hợp đồng</title>
-<link rel="stylesheet" href="../css/timkiem.css">
+<link rel="stylesheet" href="../css/hopdong.css">
 <link rel="icon" type="icon" href="../icon/logo.png">
 <?php
     include "sliderbar.php";
@@ -14,19 +14,22 @@
 <body>
     <div class="sinhvien">
         <h1>Quản Lý Hợp Đồng</h1>
+        <h2>(Lưu ý: Mỗi phòng chỉ được đăng ký tối đa 10 sinh viên)</h2>
         <form method="GET" action="">
             <input class="tk" type="submit" value="Tìm kiếm">
             <input class="Timkiem" type="text" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>" placeholder="Nhập tên hoặc mã sinh viên">
         </form>
         <a href="Themhopdong.php">Thêm hợp đồng</a>
+        <a href="Danhsachphong.php">Danh sách phòng</a>
         <table border="1">
             <tr>
                 <th>ID</th>
+                <th>Mã hợp đồng</th>
                 <th>Mã sinh viên</th>
                 <th>Họ tên</th>
                 <th>Lớp</th>
                 <th>Phòng</th>
-                <th>Ngày vào</th>
+                <th>Ngày tạo</th>
                 <th>Thao tác</th>
             </tr>
             <?php
@@ -38,11 +41,12 @@
                     ?>
                     <tr>
                         <td><?php echo $student['id']; ?></td>
+                        <td><?php echo $student['Mahopdong']; ?></td>
                         <td><?php echo $student['Masinhvien']; ?></td>
                         <td><?php echo $student['Hoten']; ?></td>
                         <td><?php echo $student['Lop']; ?></td>
-                        <td><?php echo $student['Phong']; ?></td>
-                        <td><?php echo $student['Ngayvao']; ?></td>
+                        <td><?php echo $student['Maphong']; ?></td>
+                        <td><?php echo $student['Ngaytao']; ?></td>
                         <td>
                             <a href="Suahopdong.php?id=<?php echo $student['id']; ?>">Sửa</a>
                             <a href="Xoahopdong.php?id=<?php echo $student['id']; ?>">Xóa</a>

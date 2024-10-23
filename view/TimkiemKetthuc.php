@@ -1,12 +1,12 @@
 <?php
 include_once "../config/db.php";
 
-if (isset($_POST['masinhvien'])) {
-    $masinhvien = $_POST['masinhvien'];
+if (isset($_POST['mathanhtoan'])) {
+    $mathanhtoan = $_POST['mathanhtoan'];
 
-    $sql = "SELECT hoten, lop, phong FROM hopdong WHERE masinhvien = ?";
+    $sql = "SELECT Mahopdong, Hoten, Thanhtoan, Maphong FROM thanhtoan WHERE Mathanhtoan = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $masinhvien);
+    $stmt->bind_param("s", $mathanhtoan);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -14,7 +14,7 @@ if (isset($_POST['masinhvien'])) {
         $row = $result->fetch_assoc();
         echo json_encode($row);
     } else {
-        echo json_encode(['hoten' => '', 'lop' => '', 'phong' => '']);
+        echo json_encode(['Mahopdong' => '', 'Hoten' => '', 'Thanhtoan' => '', 'Maphong' => '']);
     }
 
     $stmt->close();

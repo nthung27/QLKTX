@@ -1,35 +1,32 @@
-<title>Danh sách thanh toán</title>
-<link rel="stylesheet" href="../css/timkiem.css">
+<title>Danh sách phòng sinh viên</title>
+<link rel="stylesheet" href="../css/hopdong.css">
 <link rel="icon" type="icon" href="../icon/logo.png">
 <?php
     include "sliderbar.php";
     include_once "../config/db.php";
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     if ($searchTerm) {
-        $sql = "SELECT * FROM thanhtoan WHERE Phong LIKE '%$searchTerm%' OR Masinhvien LIKE '%$searchTerm%'";
+        $sql = "SELECT * FROM hopdong WHERE Hoten LIKE '%$searchTerm%' OR Maphong LIKE '%$searchTerm%'";
     } else {
-        $sql = "SELECT * FROM thanhtoan";
+        $sql = "SELECT * FROM hopdong";
     }
 ?>
 <body>
     <div class="sinhvien">
-        <h1>Quản Lý Thanh Toán</h1>
+        <h1>Danh Sách Phòng Sinh Viên Đã Thuê</h1>
         <form method="GET" action="">
             <input class="tk" type="submit" value="Tìm kiếm">
-            <input class="Timkiem" type="text" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>" placeholder="Nhập tên phòng hoặc mã sinh viên">
+            <input class="Timkiem" type="text" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>" placeholder="Nhập tên hoặc mã phòng">
         </form>
-        <a href="Themthanhtoan.php">Thêm dữ liệu</a>
+        <a href="Hopdong.php">Hợp đồng</a>
         <table border="1">
             <tr>
                 <th>ID</th>
-                <th>Mã thanh toán</th>
-                <th>Mã hợp đồng</th>
+                <th>Mã sinh viên</th>
                 <th>Họ tên</th>
-                <th>Mã phòng</th>
-                <th>Tổng tiền</th>
-                <th>Thanh toán</th>
+                <th>Lớp</th>
+                <th>Phòng</th>
                 <th>Ngày tạo</th>
-                <th>Thao tác</th>
             </tr>
             <?php
             $result = mysqli_query($conn, $sql);
@@ -40,17 +37,11 @@
                     ?>
                     <tr>
                         <td><?php echo $student['id']; ?></td>
-                        <td><?php echo $student['Mathanhtoan']; ?></td>
-                        <td><?php echo $student['Mahopdong']; ?></td>
+                        <td><?php echo $student['Masinhvien']; ?></td>
                         <td><?php echo $student['Hoten']; ?></td>
+                        <td><?php echo $student['Lop']; ?></td>
                         <td><?php echo $student['Maphong']; ?></td>
-                        <td><?php echo $student['Tongtien']; ?></td>
-                        <td><?php echo $student['Thanhtoan']; ?></td>
                         <td><?php echo $student['Ngaytao']; ?></td>
-                        <td>
-                            <a href="Suathanhtoan.php?id=<?php echo $student['id']; ?>">Sửa</a>
-                            <a href="Xoathanhtoan.php?id=<?php echo $student['id']; ?>">Xóa</a>
-                        </td>
                     </tr>
                     <?php
                 }

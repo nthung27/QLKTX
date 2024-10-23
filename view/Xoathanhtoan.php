@@ -37,7 +37,7 @@
 ?>
 <body>
     <h2>Xác nhận xóa dữ liệu</h2>
-    <p>Bạn có chắc chắn muốn xóa dữ liệu <?php echo $student['Masinhvien']; ?> không?</p>
+    <p>Bạn có chắc chắn muốn xóa dữ liệu <?php echo $student['Hoten']; ?> không?</p>
     <form method="post">
         <input type="submit" name="delete" value="Xác nhận xóa">
         <a href="javascript:history.go(-1)">Quay lại</a>

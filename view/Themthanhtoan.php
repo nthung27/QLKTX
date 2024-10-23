@@ -10,12 +10,20 @@
         <div>
             <form action="" method="POST">
                 <div class="form-group">
-                    <label for="Masinhvien">Mã sinh viên</label>
-                    <input type="text" name="Masinhvien" id="masinhvien" placeholder="VD: 72DCHT20024">
+                    <label for="Mathanhtoan">Mã thanh toán</label>
+                    <input type="text" name="Mathanhtoan" id="mathanhtoan" placeholder="VD: TT1">
+                </div>
+                <div class="form-group">
+                    <label for="Mahopdong">Mã hợp đồng</label>
+                    <input type="text" name="Mahopdong" id="mahopdong" placeholder="VD: HD1">
                     <button type="button" id="searchButton">Tìm kiếm</button>
                 </div>
                 <div class="form-group">
-                    <label for="Phong">Phòng</label>
+                    <label for="Hoten">Họ tên</label>
+                    <input type="text" name="Hoten" id="hoten" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="Phong"> Mã phòng</label>
                     <input type="text" name="Phong" id="phong" readonly>
                 </div>
                 <div class="form-group">
@@ -54,18 +62,19 @@
     <!--xử lý nút tìm kiếm-->
     <script>
         document.getElementById('searchButton').addEventListener('click', function() {
-            var masinhvien = document.getElementById('masinhvien').value;
-            if (masinhvien) {
+            var mahopdong = document.getElementById('mahopdong').value;
+            if (mahopdong) {
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'TimkiemMasinhvien.php', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var response = JSON.parse(xhr.responseText);
-                        document.getElementById('phong').value = response.phong;
+                        document.getElementById('hoten').value = response.Hoten;
+                        document.getElementById('phong').value = response.Maphong;
                     }
                 };
-                xhr.send('masinhvien=' + masinhvien);
+                xhr.send('mahopdong=' + mahopdong);
             }
         });
     </script>
@@ -88,48 +97,31 @@
     </script>
 </body>
 
-<!--php xử lý nút tính tiền-->
-<?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $tiendien = isset($_POST['Tiendien']) ? floatval($_POST['Tiendien']) : 0;
-        $tienvesinh = isset($_POST['Tienvesinh']) ? floatval($_POST['Tienvesinh']) : 100000;
-        $tiennuoc = isset($_POST['Tiennuoc']) ? floatval($_POST['Tiennuoc']) : 0;
-        $tiennha = isset($_POST['Tiennha']) ? floatval($_POST['Tiennha']) : 700000;
-    
-        // Tính tổng tiền
-        $tongtien = $tiendien + $tienvesinh + $tiennuoc + $tiennha;
-    
-        // Thực hiện các thao tác với tổng tiền (ví dụ: lưu vào cơ sở dữ liệu)
-        // ...
-    
-        echo "Tổng tiền: " . $tongtien;
-    }
-?>
-
-
 <!--php xử lý nút thêm-->
 <?php
     if (isset($_POST['tdl'])) {
         // Lấy dữ liệu từ form
-        $Masinhvien = $_POST['Masinhvien'];
+        $Mathanhtoan = $_POST['Mathanhtoan'];
+        $Mahopdong = $_POST['Mahopdong'];
+        $Hoten = $_POST['Hoten'];
         $Phong = $_POST['Phong'];
         $Tongtien = $_POST['Tongtien'];
         $Thanhtoan = $_POST['Thanhtoan'];
 
         // Kiểm tra các trường không để trống
-        if (empty($Masinhvien) || empty($Phong) || empty($Tongtien) || empty($Thanhtoan)) {
+        if (empty($Mathanhtoan) || empty($Mahopdong) || empty($Hoten) || empty($Phong) || empty($Tongtien) || empty($Thanhtoan)) {
             echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
         } else {
             // Kiểm tra trùng mã sinh viên
-            $check_sql = "SELECT * FROM sinhvien WHERE Masinhvien = '$Masinhvien'";
+            $check_sql = "SELECT * FROM thanhtoan WHERE Mathanhtoan = '$Mathanhtoan' OR Mahopdong = '$Mahopdong'";
             $result = mysqli_query($conn, $check_sql);
 
             if (mysqli_num_rows($result) > 0) {
-                echo "<script>alert('Mã sinh viên đã tồn tại');</script>";
+                echo "<script>alert('Mã thanh toán hoặc mã hợp đồng đã tồn tại!');</script>";
             } else {
                 // Tạo truy vấn SQL để chèn dữ liệu vào bảng thanhtoan
-                $sql = "INSERT INTO thanhtoan (Masinhvien, Phong, Tongtien, Thanhtoan) 
-                        VALUES ('$Masinhvien', '$Phong', '$Tongtien', '$Thanhtoan')";
+                $sql = "INSERT INTO thanhtoan (Mathanhtoan, Mahopdong, Hoten, Maphong, Tongtien, Thanhtoan) 
+                        VALUES ('$Mathanhtoan', '$Mahopdong', '$Hoten', '$Phong', '$Tongtien', '$Thanhtoan')";
 
                 // Thực thi truy vấn và kiểm tra kết quả
                 if (mysqli_query($conn, $sql)) {
