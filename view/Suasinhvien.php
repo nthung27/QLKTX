@@ -60,7 +60,7 @@
         <div>
             <form action="" method="POST">
                 <label for="msv">Mã sinh viên</label>
-                <input type="text" name="Masinhvien" id="msv" value="<?php echo $student['Masinhvien']; ?>">
+                <input type="text" name="Masinhvien" id="msv" value="<?php echo $student['Masinhvien']; ?>" readonly>
 
                 <label for="hoten">Họ tên</label>
                 <input type="text" name="Hoten" id="hoten" value="<?php echo $student['Hoten']; ?>">

@@ -16,7 +16,13 @@
                 <input type="text" name="Tenphong" id="tenphong" placeholder="VD: PA01">
 
                 <label for="daynha">Dãy nhà</label>
-                <input type="text" name="Daynha" id="daynha" placeholder="VD: A01">
+                <select name="Daynha" id="daynha">
+                    <option value="">Chọn dãy nhà</option>
+                    <option value="A01">A01</option>
+                    <option value="A02">A02</option>
+                    <option value="B01">B01</option>
+                    <option value="B02">B02</option>
+                </select>
 
                 <label for="tinhtrang">Tình trạng</label>
                 <input type="text" name="Tinhtrang" id="tinhtrang" placeholder="VD: Sạch sẽ">
@@ -26,6 +32,7 @@
         </div>
     </div>
 </body>
+
 
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

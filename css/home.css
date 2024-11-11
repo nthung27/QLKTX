@@ -15,6 +15,12 @@
     margin-bottom: 20px;
 }
 
+.sinhvien h2 {
+    text-align: center;
+    font-style: italic;
+    color: #333;
+}
+
 .Timkiem {
     width: 300px;
     padding: 10px;
@@ -100,5 +106,45 @@ td a:last-child {
 
 td a:last-child:hover {
     color: #c82333;
+}
+
+.pagination {
+    display: flex;
+    justify-content: right;
+    padding: 0;
+    margin: 20px 0;
+    list-style: none;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 8px 12px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.page-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
 }
 

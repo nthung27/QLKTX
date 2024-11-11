@@ -98,3 +98,10 @@
     margin: 10px 0;
     color: #FFCD42;
 }
+.main a {
+    color: #3cbe18;
+    text-decoration: none;
+}
+.main a:hover {
+    color: #fff;
+}
