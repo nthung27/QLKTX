@@ -41,7 +41,7 @@
                 <th>Họ tên</th>
                 <th>Lớp</th>
                 <th>Phòng</th>
-                <th>Ngày tạo</th>
+                <th>Ngày ký hợp đồng</th>
                 <th>Thao tác</th>
             </tr>
             <?php
@@ -55,7 +55,7 @@
                         <td><?php echo $contract['Hoten']; ?></td>
                         <td><?php echo $contract['Lop']; ?></td>
                         <td><?php echo $contract['Maphong']; ?></td>
-                        <td><?php echo $contract['Ngaytao']; ?></td>
+                        <td><?php echo $contract['Ngaykyhopdong']; ?></td>
                         <td>
                             <a href="Suahopdong.php?id=<?php echo $contract['id']; ?>">Sửa</a>
                             <a href="Xoahopdong.php?id=<?php echo $contract['id']; ?>">Xóa</a>

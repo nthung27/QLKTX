@@ -5,7 +5,10 @@
     include "sliderbar.php";
     include_once "../config/db.php";
 
-    $phong_sql = "SELECT Maphong FROM phong";
+    $phong_sql = "SELECT phong.Maphong, COUNT(hopdong.Maphong) AS total 
+              FROM phong 
+              LEFT JOIN hopdong ON phong.Maphong = hopdong.Maphong 
+              GROUP BY phong.Maphong";
     $phong_result = $conn->query($phong_sql);
 
     if (!$phong_result) {
@@ -14,7 +17,6 @@
 ?>
 <body>
     <div class="themsinhvien">
-        <h2 style="font-style: italic;">(Lưu ý: Mỗi phòng chỉ được đăng ký tối đa 10 sinh viên)</h2>
         <div>
             <form action="" method="POST">
                 <div class="form-group">
@@ -40,7 +42,13 @@
                         <?php
                             if ($phong_result->num_rows > 0) {
                                 while($row = $phong_result->fetch_assoc()) {
-                                    echo "<option value='" . $row['Maphong'] . "'>" . $row['Maphong'] . "</option>";
+                                    $maphong = $row['Maphong'];
+                                    $total = $row['total']; // Số lượng sinh viên trong phòng (từ truy vấn trước đó)
+
+                                    // Chỉ hiển thị các phòng chưa đủ 10 sinh viên
+                                    if ($total < 1) {
+                                        echo "<option value='$maphong'>$maphong (Đã có $total sinh viên)</option>";
+                                    }
                                 }
                             } else {
                                 echo "<option value=''>Không có phòng</option>";
@@ -48,6 +56,7 @@
                         ?>
                     </select>
                 </div>
+
                 <input type="submit" name="thd" value="Thêm hợp đồng">
             </form>
         </div>
@@ -87,40 +96,32 @@
         if (empty($Masinhvien) || empty($Hoten) || empty($Lop) || empty($Phong)) {
             echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
         } else {
-            // Kiểm tra số lượng sinh viên trong phòng
-            $count_sql = "SELECT COUNT(*) AS total FROM hopdong WHERE Maphong = '$Phong'";
-            $count_result = mysqli_query($conn, $count_sql);
-            $row = mysqli_fetch_assoc($count_result);
+            // Kiểm tra trùng mã sinh viên hoặc mã hợp đồng
+            $check_sql = "SELECT * FROM hopdong WHERE Masinhvien = '$Masinhvien' OR Mahopdong = '$Mahopdong'";
+            $result = mysqli_query($conn, $check_sql);
 
-            if ($row['total'] >= 2) {
-                echo "<script>alert('Phòng này đã đủ 10 sinh viên. Vui lòng chọn phòng khác.');</script>";
+            if (mysqli_num_rows($result) > 0) {
+                echo "<script>alert('Mã sinh viên hoặc mã hợp đồng đã tồn tại!');</script>";
             } else {
-                // Kiểm tra trùng mã sinh viên hoặc mã hợp đồng
-                $check_sql = "SELECT * FROM hopdong WHERE Masinhvien = '$Masinhvien' OR Mahopdong = '$Mahopdong'";
-                $result = mysqli_query($conn, $check_sql);
+                // Tạo truy vấn SQL để chèn dữ liệu vào bảng hopdong
+                $sql = "INSERT INTO hopdong (Mahopdong, Masinhvien, Hoten, Lop, Maphong) 
+                        VALUES ('$Mahopdong', '$Masinhvien', '$Hoten', '$Lop', '$Phong')";
 
-                if (mysqli_num_rows($result) > 0) {
-                    echo "<script>alert('Mã sinh viên hoặc mã hợp đồng đã tồn tại!');</script>";
+                // Thực thi truy vấn và kiểm tra kết quả
+                if (mysqli_query($conn, $sql)) {
+                    echo "<script>alert('Thêm hợp đồng thành công'); window.location.href='Hopdong.php';</script>";
+                    exit;
                 } else {
-                    // Tạo truy vấn SQL để chèn dữ liệu vào bảng hopdong
-                    $sql = "INSERT INTO hopdong (Mahopdong, Masinhvien, Hoten, Lop, Maphong) 
-                            VALUES ('$Mahopdong', '$Masinhvien', '$Hoten', '$Lop', '$Phong')";
-
-                    // Thực thi truy vấn và kiểm tra kết quả
-                    if (mysqli_query($conn, $sql)) {
-                        echo "<script>alert('Thêm hợp đồng thành công'); window.location.href='Hopdong.php';</script>";
-                        exit;
-                    } else {
-                        echo "<script>alert('Lỗi: " . mysqli_error($conn) . "');</script>";
-                    }
+                    echo "<script>alert('Lỗi: " . mysqli_error($conn) . "');</script>";
                 }
             }
-
-            // Đóng kết nối đến cơ sở dữ liệu
-            mysqli_close($conn);
         }
+
+        // Đóng kết nối đến cơ sở dữ liệu
+        mysqli_close($conn);
     }
 ?>
+
 
 
 

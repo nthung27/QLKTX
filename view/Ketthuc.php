@@ -38,7 +38,8 @@
                 <th>Họ tên</th>
                 <th>Mã phòng</th>
                 <th>Thanh toán</th>
-                <th>Ngày tạo</th>
+                <th>Ngày ký hợp đồng</th>
+                <th>Ngày kết thúc hợp đồng</th>
                 <th>Thao tác</th>
             </tr>
             <?php
@@ -51,6 +52,7 @@
                         <td><?php echo $student['Hoten']; ?></td>
                         <td><?php echo $student['Maphong']; ?></td>
                         <td><?php echo $student['Thanhtoan']; ?></td>
+                        <td><?php echo $student['Ngaykyhopdong']; ?></td>
                         <td><?php echo $student['Ngaytao']; ?></td>
                         <td>
                             <a href="Suaketthuc.php?id=<?php echo $student['id']; ?>">Sửa</a>

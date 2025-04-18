@@ -30,6 +30,10 @@
                     <label for="Phong">Mã phòng</label>
                     <input type="text" name="Phong" id="phong" readonly>
                 </div>
+                <div class="form-group">
+                    <label for="Ngaykyhopdong">Ngày ký hợp đồng</label>
+                    <input type="text" name="Ngaykyhopdong" id="ngaykyhopdong" readonly>
+                </div>
                 <input type="submit" name="tdl" value="Kết thúc hợp đồng">
             </form>
         </div>
@@ -50,6 +54,7 @@
                         document.getElementById('hoten').value = response.Hoten;
                         document.getElementById('thanhtoan').value = response.Thanhtoan;
                         document.getElementById('phong').value = response.Maphong;
+                        document.getElementById('ngaykyhopdong').value = response.Ngaykyhopdong;
                     }
                 };
                 xhr.send('mathanhtoan=' + mathanhtoan);
@@ -67,9 +72,10 @@
         $Hoten = $_POST['Hoten'];
         $Thanhtoan = $_POST['Thanhtoan'];
         $Phong = $_POST['Phong'];
+        $Ngaykyhopdong = $_POST['Ngaykyhopdong'];
 
         // Kiểm tra các trường không để trống
-        if (empty($Mathanhtoan) || empty($Mahopdong) || empty($Hoten) || empty($Thanhtoan) || empty($Phong)) {
+        if (empty($Mathanhtoan) || empty($Mahopdong) || empty($Hoten) || empty($Thanhtoan) || empty($Phong) || empty($Ngaykyhopdong)) {
             echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
         } else {
             // Kiểm tra trùng mã kết thúc và mã thanh toán
@@ -80,8 +86,8 @@
                 echo "<script>alert('Dữ liệu đã tồn tại!');</script>";
             } else {
                 // Tạo truy vấn SQL để chèn dữ liệu vào bảng ketthuc
-                $sql_insert = "INSERT INTO ketthuc (Mathanhtoan, Mahopdong, Hoten, Thanhtoan, Maphong) 
-                            VALUES ('$Mathanhtoan', '$Mahopdong', '$Hoten', '$Thanhtoan', '$Phong')";
+                $sql_insert = "INSERT INTO ketthuc (Mathanhtoan, Mahopdong, Hoten, Thanhtoan, Maphong, Ngaykyhopdong) 
+                            VALUES ('$Mathanhtoan', '$Mahopdong', '$Hoten', '$Thanhtoan', '$Phong', '$Ngaykyhopdong')";
 
                 // Thực thi truy vấn chèn và kiểm tra kết quả
                 if (mysqli_query($conn, $sql_insert)) {
